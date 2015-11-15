@@ -1,0 +1,7 @@
+{
+  "name": "anonument_ionic",
+  "private": "true",
+  "devDependencies": {
+    "ionic": "driftyco/ionic-bower#1.1.1"
+  }
+}
