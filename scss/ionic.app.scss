@@ -1,18 +1,7 @@
 /*
-To customize the look and feel of Ionic, you can override the variables
-in ionic's _variables.scss file.
 
-For example, you might change some of the default colors:
+    Main Styles for app (on top of ionic styles)
 
-$light:                           #fff !default;
-$stable:                          #f8f8f8 !default;
-$positive:                        #387ef5 !default;
-$calm:                            #11c1f3 !default;
-$balanced:                        #33cd5f !default;
-$energized:                       #ffc900 !default;
-$assertive:                       #ef473a !default;
-$royal:                           #886aea !default;
-$dark:                            #444 !default;
 */
 
 // The path for our ionicons font files, relative to the built CSS in www/css
@@ -51,6 +40,10 @@ html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abb
 		    transform: $transform;
 }
 
+ion-content.assertive {
+    background-color: $assertive;
+}
+
 //For fullscreen pages
 .noscroll {
 	.scroll {
@@ -58,6 +51,17 @@ html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abb
 	}
 }
 
+//make clear buttons
+.button {
+    background-color: rgba(255,255,255,0.4);
+    border-color: rgba(255,255,255,0.5);
+    &.activated {
+        background-color: rgba(255,255,255,0.6);
+        border-color: rgba(255,255,255,0.7);
+    }
+}
+
+//align buttons at bottom
 .front-page-buttons {
 	width: 100%;
 	bottom: 0;

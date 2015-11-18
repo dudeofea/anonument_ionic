@@ -3,14 +3,14 @@
 // -------------------------------
 
 $light:                           #fff !default;
-$stable:                          #f8f8f8 !default;
-$positive:                        #387ef5 !default;
+$stable:                          #F6F8F6 !default;
+$positive:                        #0892A5 !default;
 $calm:                            #11c1f3 !default;
 $balanced:                        #33cd5f !default;
 $energized:                       #ffc900 !default;
-$assertive:                       #ef473a !default;
+$assertive:                       #DA587A !default;
 $royal:                           #886aea !default;
-$dark:                            #444 !default;
+$dark:                            #353535 !default;
 
 
 // Base
@@ -93,13 +93,13 @@ $button-bar-button-padding:       8px !default;
 $button-bar-button-icon-size:     20px !default;
 
 $button-light-bg:                 $light !default;
-$button-light-text:               #444 !default;
+$button-light-text:               $dark !default;
 $button-light-border:             #ddd !default;
 $button-light-active-bg:          #fafafa !default;
 $button-light-active-border:      #ccc !default;
 
 $button-stable-bg:                $stable !default;
-$button-stable-text:              #444 !default;
+$button-stable-text:              $dark !default;
 $button-stable-border:            #b2b2b2 !default;
 $button-stable-active-bg:         #e5e5e5 !default;
 $button-stable-active-border:     #a2a2a2 !default;
