@@ -9113,11 +9113,20 @@ ion-content.assertive {
   height: 100%; }
 
 .button {
-  background-color: rgba(255, 255, 255, 0.4);
-  border-color: rgba(255, 255, 255, 0.5); }
+  background-color: rgba(255, 255, 255, 0.6);
+  border: none;
+  box-shadow: 0px 4px 0px rgba(255, 255, 255, 0.4);
+  font-weight: bold;
+  font-size: 15pt;
+  transition: 0.2s all ease; }
   .button.activated {
     background-color: rgba(255, 255, 255, 0.6);
-    border-color: rgba(255, 255, 255, 0.7); }
+    box-shadow: 0px 2px 0px rgba(255, 255, 255, 0.4);
+    -webkit-transform: translateY(2px);
+    -moz-transform: translateY(2px);
+    -ms-transform: translateY(2px);
+    -o-transform: translateY(2px);
+    transform: translateY(2px); }
 
 .front-page-buttons {
   width: 100%;
@@ -9126,5 +9135,5 @@ ion-content.assertive {
   padding: 0 10px; }
   .front-page-buttons .button {
     display: block;
-    margin: 10px auto;
+    margin: 14px auto;
     width: 100%; }
