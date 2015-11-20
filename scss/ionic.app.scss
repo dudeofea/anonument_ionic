@@ -6,6 +6,14 @@
 
 // The path for our ionicons font files, relative to the built CSS in www/css
 $ionicons-font-path: "../lib/ionic/fonts" !default;
+@font-face {
+    font-family: Archivo;
+    src: url($ionicons-font-path+"/Archivo.otf") format("opentype");
+}
+@font-face {
+    font-family: Bree;
+    src: url($ionicons-font-path+"/Bree.otf") format("opentype");
+}
 
 // Include all of Ionic
 @import "www/lib/ionic/scss/ionic";
@@ -47,22 +55,50 @@ ion-content.assertive {
 //For fullscreen pages
 .noscroll {
 	.scroll {
-		height: 100%;
+        height: 100%;
+        width: 100%;
+        position: absolute;
+        top: 0;
 	}
 }
 
 //make clear buttons
 .button {
-    background-color: rgba(255,255,255,0.6);
+    background-color: rgba($light,0.6);
     border: none;
-    box-shadow: 0px 4px 0px rgba(255,255,255,0.4);
-    font-weight: bold;
+    box-shadow: 0px 4px 0px rgba($light,0.4);
     font-size: 15pt;
+    font-family: Archivo;
     transition: 0.2s all ease;
     &.activated {
-        background-color: rgba(255,255,255,0.6);
-        box-shadow: 0px 2px 0px rgba(255,255,255,0.4);
+        background-color: rgba($light,0.75);
+        box-shadow: 0px 2px 0px rgba($light,0.4);
         @include transform(translateY(2px));
+    }
+}
+
+.front-page-title {
+    h1 {
+        font-family: Archivo;
+        font-size: 230%;
+        text-transform: uppercase;
+        text-align: center;
+        margin: 1em 0 0.3em;
+        color: rgba($stable, 0.9);
+        text-shadow: 0px 2px 0px rgba($dark, 0.5);
+    }
+    h2 {
+        font-size: 150%;
+        font-family: sans-serif;
+        text-align: center;
+        color: rgba($stable, 0.4);
+    }
+    p {
+        font-size: 80%;
+        width: 80%;
+        margin: 1.5em auto;
+        display: block;
+        color: rgba($stable, 0.8);
     }
 }
 
