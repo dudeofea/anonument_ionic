@@ -9117,6 +9117,15 @@ table {
 ion-content.assertive {
   background-color: #DA587A; }
 
+ion-content.positive {
+  background-color: #0892A5; }
+
+.bar.bar-header.bar-transparent {
+  background-color: rgba(255, 255, 255, 0.4); }
+
+.scroll-content.has-header {
+  top: 0; }
+
 .noscroll .scroll {
   height: 100%;
   width: 100%;

@@ -48,8 +48,16 @@ html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abb
 		    transform: $transform;
 }
 
-ion-content.assertive {
-    background-color: $assertive;
+//page backgrounds
+ion-content.assertive { background-color: $assertive; }
+ion-content.positive  { background-color: $positive;  }
+
+//header re-styling
+.bar.bar-header.bar-transparent {
+    background-color: rgba($light, 0.4);
+}
+.scroll-content.has-header {
+    top: 0;
 }
 
 //For fullscreen pages

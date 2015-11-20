@@ -62,4 +62,7 @@ angular.module('starter', ['ionic', 'anonument'])
   // if none of the above states are matched, use this as the fallback
   $urlRouterProvider.otherwise('/anonument/home');
 
+}).config(function($ionicConfigProvider) {
+  // remove back button text completely
+  $ionicConfigProvider.backButton.previousTitleText(false).text('');
 });
