@@ -9,7 +9,7 @@ Parse.initialize('yuRBoDhzewR97zctSJeKBZWdv3UFeiPTt7y3zvoJ',		//Application ID
 // the 2nd parameter is an array of 'requires'
 // 'starter.services' is found in services.js
 // 'starter.controllers' is found in controllers.js
-angular.module('starter', ['ionic', 'anonument'])
+angular.module('starter', ['ionic', 'anonument', 'ngCordova'])
 
 .run(function($ionicPlatform) {
   $ionicPlatform.ready(function() {

@@ -1,24 +1,36 @@
-<ion-view view-title="CREATE">
-	<ion-content class="form-page" style="background-color: {{create_color}}">
+<ion-view view-title="CREATE" class="form-page">
+	<ion-content style="background-color: {{create_color}}">
 		<div class="list">
 			<label class="item item-input item-stacked-label">
 				<span class="input-label">Title</span>
-				<input type="text" placeholder="A really neat sculpture">
+				<input type="text" placeholder="A really neat sculpture" ng-model="data.title">
 			</label>
 			<label class="item item-input item-stacked-label">
 				<span class="input-label">First Comment</span>
-				<input type="text" placeholder="First!">
+				<input type="text" placeholder="First!" ng-model="data.comment">
 			</label>
 			<label class="item item-input item-stacked-label">
 				<span class="input-label">Mood Color</span>
 			</label>
-			<div class="item range range-positive">
-				<input type="range" name="volume" min="0" max="100" value="0" ng-model="data.hue" ng-change="refreshColor()">
+			<div class="item range range-light">
+				<input type="range" name="volume" min="0" max="100" ng-model="data.hue" ng-change="refreshColor()">
 			</div>
-			<div class="item range range-positive">
-				<input type="range" name="volume" min="0" max="70" value="0" ng-model="data.sat" ng-change="refreshColor()">
+			<div class="item range range-light">
+				<input type="range" name="volume" min="0" max="70" ng-model="data.sat" ng-change="refreshColor()">
 			</div>
-			<button class="button" ui-sref="anonument.create">POST</button>
 		</div>
     </ion-content>
+	<div class="bottom">
+		<div class="item status" ng-show="loc == null">
+			<span>Waiting for location</span>
+			<i class="icon ion-ios-location-outline"></i>
+		</div>
+		<div class="item status" ng-show="loc != null">
+			<span>Location found</span>
+			<i class="icon ion-ios-location"></i>
+		</div>
+		<div class="item">
+			<button class="button" ng-class="loc == null ? 'disabled' : ''" ng-click="submit()" style="width: 100%">POST</button>
+		</div>
+	</div>
 </ion-view>

@@ -1,6 +1,6 @@
 angular.module('anonument', [])
 
-.controller('CreateCtrl', function($scope) {
+.controller('CreateCtrl', function($scope, $cordovaGeolocation) {
 	/* Converts an HSL color value to RGB. Conversion formula
 	* adapted from http://en.wikipedia.org/wiki/HSL_color_space.
 	* Assumes h, s, and l are contained in the set [0, 1] and
@@ -32,11 +32,68 @@ angular.module('anonument', [])
 	};
 	$scope.refreshColor = function(){
 		$scope.create_color = $scope.toRGB($scope.data.hue/100, $scope.data.sat/100, 0.6);
-		console.log('color', $scope.create_color);
+	};
+	$scope.submit = function(){
+		if($scope.data.title == ""){
+			alert('Please enter a title');
+			return;
+		}
+		if($scope.data.comment == ""){
+			alert('Please enter a comment');
+			return;
+		}
+		//save the point in Parse and show the comment thread
+		var Monument = Parse.Object.extend("monuments");
+		var Comment = Parse.Object.extend("comments");
+
+		var m = new Monument();
+		m.set("title", $scope.data.title);
+		m.set("mood_color", $scope.create_color);
+		m.set("location", new Parse.GeoPoint($scope.loc.latitude, $scope.loc.longitude));
+
+		var parseError = function(ob, err){
+			console.log('Parse Error:', err);
+			alert('Could not save point, connection error: ', err);
+		}
+		m.save(null, {
+			success:function(ob) {
+				//save first comment as well
+				var c = new Comment();
+				c.set("monument", ob);
+				c.set("comment", $scope.data.comment);
+				c.save(null, {
+					success: function(ob){
+						//take to comment thread page
+
+					}, error: parseError
+				});
+			},
+			error: parseError
+		});
 	};
 	$scope.data = {
-		hue: 0,
+		title: "",
+		comment: "",
+		hue: 70,
 		sat: 35
 	};
+	$scope.loc = null;
 	$scope.refreshColor();
+	//GPS location watch
+	var watchOptions = {
+		frequency : 1000,
+		timeout : 3000,
+		enableHighAccuracy: false // may cause errors if true
+	};
+	$scope.gps_watch = $cordovaGeolocation.watchPosition(watchOptions);
+	$scope.gps_watch.then(
+		null,
+		function(err) {
+			// error
+			console.log('GPS Error', err);
+		},
+		function(position) {
+			$scope.loc = position.coords;
+			console.log('coord:', $scope.loc);
+		});
 });

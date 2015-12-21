@@ -143,7 +143,44 @@ ion-content.positive  { background-color: $positive;	color: $light;  }
 //Page with form input
 .form-page {
 	.item-stacked-label {
+
+		padding: 10px 20px;
+		span {
+			color: $light;
+			padding: 5px 0 10px 0;
+			font-size: 18px;
+		}
+		input {
+			color: $dark;
+			padding: 10px;
+			background-color: rgba($light, 0.3);
+			@include placeholder(rgba($light, 0.7), 0);
+		}
+	}
+	.item {
 		font-family: 'Cabin';
+		background-color: transparent;
 		border: 0;
+		color: $light;
+	}
+	.item.status {
+		text-align: center;
+		span {
+			font-size: 18px;
+			width: 160px;
+			display: inline-block;
+		}
+		i {
+			font-size: 24px;
+			margin-left: 5px;
+		}
+	}
+	.bottom {
+		position: absolute;
+		bottom: 5px;
+		width: 100%;
+		.item {
+			width: 100%;
+		}
 	}
 }

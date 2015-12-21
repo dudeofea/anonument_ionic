@@ -9193,5 +9193,42 @@ ion-content.positive {
   font-size: 25px; }
 
 .form-page .item-stacked-label {
+  padding: 10px 20px; }
+  .form-page .item-stacked-label span {
+    color: #fff;
+    padding: 5px 0 10px 0;
+    font-size: 18px; }
+  .form-page .item-stacked-label input {
+    color: #353535;
+    padding: 10px;
+    background-color: rgba(255, 255, 255, 0.3); }
+    .form-page .item-stacked-label input::-moz-placeholder {
+      color: rgba(255, 255, 255, 0.7); }
+    .form-page .item-stacked-label input:-ms-input-placeholder {
+      color: rgba(255, 255, 255, 0.7); }
+    .form-page .item-stacked-label input::-webkit-input-placeholder {
+      color: rgba(255, 255, 255, 0.7);
+      text-indent: 0; }
+
+.form-page .item {
   font-family: 'Cabin';
-  border: 0; }
+  background-color: transparent;
+  border: 0;
+  color: #fff; }
+
+.form-page .item.status {
+  text-align: center; }
+  .form-page .item.status span {
+    font-size: 18px;
+    width: 160px;
+    display: inline-block; }
+  .form-page .item.status i {
+    font-size: 24px;
+    margin-left: 5px; }
+
+.form-page .bottom {
+  position: absolute;
+  bottom: 5px;
+  width: 100%; }
+  .form-page .bottom .item {
+    width: 100%; }
