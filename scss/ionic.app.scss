@@ -11,9 +11,11 @@ $ionicons-font-path: "../lib/ionic/fonts" !default;
     src: url($ionicons-font-path+"/Archivo.otf") format("opentype");
 }
 @font-face {
-    font-family: Bree;
-    src: url($ionicons-font-path+"/Bree.otf") format("opentype");
+    font-family: Cabin;
+	font-weight: normal;
+    src: url($ionicons-font-path+"/Cabin-Regular.otf") format("opentype");
 }
+
 
 // Include all of Ionic
 @import "www/lib/ionic/scss/ionic";
@@ -49,15 +51,22 @@ html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abb
 }
 
 //page backgrounds
-ion-content.assertive { background-color: $assertive; }
-ion-content.positive  { background-color: $positive;  }
+ion-content.assertive { background-color: $assertive; 	color: $light;	}
+ion-content.positive  { background-color: $positive;	color: $light;  }
 
 //header re-styling
 .bar.bar-header.bar-transparent {
     background-color: rgba($light, 0.4);
+	border: 0;
+	//back button
+	.button i:before{
+		color: $dark;
+	}
 }
 .scroll-content.has-header {
     top: 0;
+	padding-top: $bar-height;
+	transition: background-color 0.7s ease;
 }
 
 //For fullscreen pages
@@ -120,5 +129,21 @@ ion-content.positive  { background-color: $positive;  }
 		display: block;
 		margin: 14px auto;
 		width: 100%;
+	}
+}
+
+//nav bar styles
+.bar.bar-header {
+	.title {
+		font-family: 'Archivo';
+		font-size: 25px;
+	}
+}
+
+//Page with form input
+.form-page {
+	.item-stacked-label {
+		font-family: 'Cabin';
+		border: 0;
 	}
 }

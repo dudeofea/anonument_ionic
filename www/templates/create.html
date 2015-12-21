@@ -1,5 +1,24 @@
 <ion-view view-title="CREATE">
-	<ion-content class="positive">
-        <p>ceci n'est pas le home</p>
+	<ion-content class="form-page" style="background-color: {{create_color}}">
+		<div class="list">
+			<label class="item item-input item-stacked-label">
+				<span class="input-label">Title</span>
+				<input type="text" placeholder="A really neat sculpture">
+			</label>
+			<label class="item item-input item-stacked-label">
+				<span class="input-label">First Comment</span>
+				<input type="text" placeholder="First!">
+			</label>
+			<label class="item item-input item-stacked-label">
+				<span class="input-label">Mood Color</span>
+			</label>
+			<div class="item range range-positive">
+				<input type="range" name="volume" min="0" max="100" value="0" ng-model="data.hue" ng-change="refreshColor()">
+			</div>
+			<div class="item range range-positive">
+				<input type="range" name="volume" min="0" max="70" value="0" ng-model="data.sat" ng-change="refreshColor()">
+			</div>
+			<button class="button" ui-sref="anonument.create">POST</button>
+		</div>
     </ion-content>
 </ion-view>
