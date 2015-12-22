@@ -9217,7 +9217,8 @@ ion-content.positive {
   color: #fff; }
 
 .form-page .item.status {
-  text-align: center; }
+  text-align: center;
+  padding-bottom: 5px; }
   .form-page .item.status span {
     font-size: 18px;
     width: 160px;

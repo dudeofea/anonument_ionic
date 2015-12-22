@@ -165,6 +165,7 @@ ion-content.positive  { background-color: $positive;	color: $light;  }
 	}
 	.item.status {
 		text-align: center;
+		padding-bottom: 5px;
 		span {
 			font-size: 18px;
 			width: 160px;

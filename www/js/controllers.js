@@ -1,6 +1,6 @@
 angular.module('anonument', [])
 
-.controller('CreateCtrl', function($scope, $cordovaGeolocation) {
+.controller('CreateCtrl', function($scope, $ionicPlatform, $cordovaGeolocation) {
 	/* Converts an HSL color value to RGB. Conversion formula
 	* adapted from http://en.wikipedia.org/wiki/HSL_color_space.
 	* Assumes h, s, and l are contained in the set [0, 1] and
@@ -80,20 +80,22 @@ angular.module('anonument', [])
 	$scope.loc = null;
 	$scope.refreshColor();
 	//GPS location watch
-	var watchOptions = {
-		frequency : 1000,
-		timeout : 3000,
-		enableHighAccuracy: false // may cause errors if true
-	};
-	$scope.gps_watch = $cordovaGeolocation.watchPosition(watchOptions);
-	$scope.gps_watch.then(
-		null,
-		function(err) {
-			// error
-			console.log('GPS Error', err);
-		},
-		function(position) {
-			$scope.loc = position.coords;
-			console.log('coord:', $scope.loc);
-		});
+	$scope.$on('$ionicView.enter', function(){
+		var watchOptions = {
+			frequency : 1000,
+			timeout : 10000,
+			enableHighAccuracy: true // may cause errors if true
+		};
+		$scope.gps_watch = $cordovaGeolocation.watchPosition(watchOptions);
+		$scope.gps_watch.then(
+			null,
+			function(err) {
+				// error
+				console.log('GPS Error', err);
+			},
+			function(position) {
+				$scope.loc = position.coords;
+				console.log('coord:', $scope.loc);
+			});
+	});
 });
