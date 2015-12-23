@@ -9192,44 +9192,52 @@ ion-content.positive {
   font-family: 'Archivo';
   font-size: 25px; }
 
-.form-page .item-stacked-label {
-  padding: 10px 20px; }
-  .form-page .item-stacked-label span {
-    color: #fff;
-    padding: 5px 0 10px 0;
-    font-size: 18px; }
-  .form-page .item-stacked-label input {
-    color: #353535;
-    padding: 10px;
-    background-color: rgba(255, 255, 255, 0.3); }
-    .form-page .item-stacked-label input::-moz-placeholder {
-      color: rgba(255, 255, 255, 0.7); }
-    .form-page .item-stacked-label input:-ms-input-placeholder {
-      color: rgba(255, 255, 255, 0.7); }
-    .form-page .item-stacked-label input::-webkit-input-placeholder {
-      color: rgba(255, 255, 255, 0.7);
-      text-indent: 0; }
-
-.form-page .item {
-  font-family: 'Cabin';
-  background-color: transparent;
-  border: 0;
-  color: #fff; }
-
-.form-page .item.status {
-  text-align: center;
-  padding-bottom: 5px; }
-  .form-page .item.status span {
-    font-size: 18px;
-    width: 160px;
-    display: inline-block; }
-  .form-page .item.status i {
-    font-size: 24px;
-    margin-left: 5px; }
-
-.form-page .bottom {
-  position: absolute;
-  bottom: 5px;
-  width: 100%; }
-  .form-page .bottom .item {
+.form-page {
+  min-height: 500px; }
+  .form-page .item-stacked-label {
+    padding: 10px 20px; }
+    .form-page .item-stacked-label span {
+      color: #fff;
+      padding: 5px 0 10px 0;
+      font-size: 18px; }
+    .form-page .item-stacked-label input {
+      color: #353535;
+      padding: 10px;
+      background-color: rgba(255, 255, 255, 0.3); }
+      .form-page .item-stacked-label input::-moz-placeholder {
+        color: rgba(255, 255, 255, 0.7); }
+      .form-page .item-stacked-label input:-ms-input-placeholder {
+        color: rgba(255, 255, 255, 0.7); }
+      .form-page .item-stacked-label input::-webkit-input-placeholder {
+        color: rgba(255, 255, 255, 0.7);
+        text-indent: 0; }
+  .form-page .item {
+    font-family: 'Cabin';
+    background-color: transparent;
+    border: 0;
+    color: #fff; }
+  .form-page .item.status {
+    text-align: center;
+    padding-bottom: 5px; }
+    .form-page .item.status span {
+      font-size: 18px;
+      width: 150px;
+      display: inline-block; }
+    .form-page .item.status i {
+      font-size: 24px;
+      margin-left: 5px; }
+  .form-page .bottom {
+    position: absolute;
+    bottom: 5px;
     width: 100%; }
+    .form-page .bottom .item {
+      width: 100%; }
+
+.map-page .scroll-content {
+  padding-top: 0; }
+
+.map-page .scroll {
+  height: 100%; }
+
+.map-page #map {
+  height: 100%; }

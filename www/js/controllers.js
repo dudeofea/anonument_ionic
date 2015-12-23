@@ -1,6 +1,9 @@
 angular.module('anonument', [])
 
-.controller('CreateCtrl', function($scope, $ionicPlatform, $cordovaGeolocation) {
+.controller('homeCtrl'  , function($scope){
+
+})
+.controller('createCtrl', function($scope, $ionicPlatform, $cordovaGeolocation) {
 	/* Converts an HSL color value to RGB. Conversion formula
 	* adapted from http://en.wikipedia.org/wiki/HSL_color_space.
 	* Assumes h, s, and l are contained in the set [0, 1] and
@@ -97,5 +100,20 @@ angular.module('anonument', [])
 				$scope.loc = position.coords;
 				console.log('coord:', $scope.loc);
 			});
+	});
+})
+.controller('findCtrl'  , function($scope, $cordovaGeolocation){
+	var options = {timeout: 10000, enableHighAccuracy: true};
+	$cordovaGeolocation.getCurrentPosition(options).then(function(position){
+		var latLng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+		var mapOptions = {
+		center: latLng,
+		zoom: 13,
+		disableDefaultUI: true,		//hide all controls
+		mapTypeId: google.maps.MapTypeId.ROADMAP
+		};
+		$scope.map = new google.maps.Map(document.getElementById("map"), mapOptions);
+	}, function(error){
+		console.log("Could not get location");
 	});
 });

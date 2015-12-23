@@ -33,35 +33,27 @@ angular.module('starter', ['ionic', 'anonument', 'ngCordova'])
   // Learn more here: https://github.com/angular-ui/ui-router
   // Set up the various states which the app can be in.
   // Each state's controller can be found in controllers.js
-  $stateProvider
 
   // setup an abstract state for the anonument directive
-    .state('anonument', {
+  $stateProvider.state('anonument', {
     url: '/anonument',
     abstract: true,
     templateUrl: 'templates/main.html'
   })
 
   // Each tab has its own nav history stack:
-
-  .state('anonument.home', {
-    url: '/home',
-    views: {
-      'main-view': {
-        templateUrl: 'templates/home.html'
-      }
-    }
-  })
-
-  .state('anonument.create', {
-      url: '/create',
-      views: {
-        'main-view': {
-          templateUrl: 'templates/create.html',
-          controller: 'CreateCtrl'
-        }
-      }
-  });
+  var pages = ['home', 'create', 'find'];
+  for (var i = 0; i < pages.length; i++) {
+  $stateProvider.state('anonument.'+pages[i], {
+		url: '/'+pages[i],
+		views: {
+			'main-view': {
+				templateUrl: 'templates/'+pages[i]+'.html',
+				controller: pages[i]+'Ctrl'
+			}
+		}
+	});
+  }
 
   // if none of the above states are matched, use this as the fallback
   $urlRouterProvider.otherwise('/anonument/home');

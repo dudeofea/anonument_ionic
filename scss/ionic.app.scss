@@ -142,8 +142,8 @@ ion-content.positive  { background-color: $positive;	color: $light;  }
 
 //Page with form input
 .form-page {
+	min-height: 500px;
 	.item-stacked-label {
-
 		padding: 10px 20px;
 		span {
 			color: $light;
@@ -168,7 +168,7 @@ ion-content.positive  { background-color: $positive;	color: $light;  }
 		padding-bottom: 5px;
 		span {
 			font-size: 18px;
-			width: 160px;
+			width: 150px;
 			display: inline-block;
 		}
 		i {
@@ -183,5 +183,18 @@ ion-content.positive  { background-color: $positive;	color: $light;  }
 		.item {
 			width: 100%;
 		}
+	}
+}
+
+//pages with a map
+.map-page {
+	.scroll-content {
+		padding-top: 0;
+	}
+	.scroll {
+		height: 100%;
+	}
+	#map {
+		height: 100%;
 	}
 }
