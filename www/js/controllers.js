@@ -1,13 +1,13 @@
 angular.module('anonument', [])
 
 .controller('homeCtrl'  , function($scope){
-
+	//don't really need much here
 })
 .controller('createCtrl', function($scope, $ionicPlatform, $cordovaGeolocation) {
 	/* Converts an HSL color value to RGB. Conversion formula
 	* adapted from http://en.wikipedia.org/wiki/HSL_color_space.
 	* Assumes h, s, and l are contained in the set [0, 1] and
-	* returns r, g, and b in the set [0, 255].*/
+	* returns r, g, and b in the set [0, 255]. (Thanks SO)*/
 	$scope.toRGB = function hslToRgb(h, s, l){
 		var r, g, b;
 
@@ -33,10 +33,13 @@ angular.module('anonument', [])
 		var rgb = [Math.round(r * 255), Math.round(g * 255), Math.round(b * 255)];
 		return "rgb("+rgb[0]+", "+rgb[1]+", "+rgb[2]+")";
 	};
+	//refresh when changing sliders
 	$scope.refreshColor = function(){
 		$scope.create_color = $scope.toRGB($scope.data.hue/100, $scope.data.sat/100, 0.6);
 	};
+	//post the monument to parse
 	$scope.submit = function(){
+		//TODO: possibly replace this with just blocking the POST button
 		if($scope.data.title == ""){
 			alert('Please enter a title');
 			return;
@@ -49,11 +52,11 @@ angular.module('anonument', [])
 		var Monument = Parse.Object.extend("monuments");
 		var Comment = Parse.Object.extend("comments");
 
+		//run the query!
 		var m = new Monument();
 		m.set("title", $scope.data.title);
 		m.set("mood_color", $scope.create_color);
 		m.set("location", new Parse.GeoPoint($scope.loc.latitude, $scope.loc.longitude));
-
 		var parseError = function(ob, err){
 			console.log('Parse Error:', err);
 			alert('Could not save point, connection error: ', err);
@@ -66,7 +69,7 @@ angular.module('anonument', [])
 				c.set("comment", $scope.data.comment);
 				c.save(null, {
 					success: function(ob){
-						//take to comment thread page
+						//TODO: take to comment thread page
 
 					}, error: parseError
 				});
@@ -74,6 +77,7 @@ angular.module('anonument', [])
 			error: parseError
 		});
 	};
+	//defaults
 	$scope.data = {
 		title: "",
 		comment: "",
@@ -103,14 +107,15 @@ angular.module('anonument', [])
 	});
 })
 .controller('findCtrl'  , function($scope, $cordovaGeolocation){
+	//get location first, then center map around that
 	var options = {timeout: 10000, enableHighAccuracy: true};
 	$cordovaGeolocation.getCurrentPosition(options).then(function(position){
 		var latLng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
 		var mapOptions = {
-		center: latLng,
-		zoom: 13,
-		disableDefaultUI: true,		//hide all controls
-		mapTypeId: google.maps.MapTypeId.ROADMAP
+			center: latLng,
+			zoom: 13,
+			disableDefaultUI: true,		//hide all controls
+			mapTypeId: google.maps.MapTypeId.ROADMAP
 		};
 		$scope.map = new google.maps.Map(document.getElementById("map"), mapOptions);
 	}, function(error){
