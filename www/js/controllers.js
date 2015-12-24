@@ -110,15 +110,81 @@ angular.module('anonument', [])
 	//get location first, then center map around that
 	var options = {timeout: 10000, enableHighAccuracy: true};
 	$cordovaGeolocation.getCurrentPosition(options).then(function(position){
+		//create a google map
 		var latLng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
 		var mapOptions = {
 			center: latLng,
-			zoom: 13,
+			zoom: 15,
 			disableDefaultUI: true,		//hide all controls
 			mapTypeId: google.maps.MapTypeId.ROADMAP
 		};
+		//add a position marker for the user
+		var pos_img = $scope.createColorMarker('blue', 15, 0);
 		$scope.map = new google.maps.Map(document.getElementById("map"), mapOptions);
+		var pos_marker = new google.maps.Marker({
+			map: $scope.map,
+			position: latLng,
+			icon: pos_img
+		});
+		//query parse for nearby monuments
+		var Monument = Parse.Object.extend("monuments");
+		var pos_geopoint = new Parse.GeoPoint(position.coords);
+		var query = new Parse.Query(Monument);
+		query.near("location", pos_geopoint);
+		query.limit(50);	//at most 50 results
+		query.find({
+			success: function(results) {
+				// Do something with the returned Parse.Object values
+				for (var i = 0; i < results.length; i++) {
+					var r = results[i];
+					var m_loc = r.get('location');
+					var m_latlng = new google.maps.LatLng(m_loc.latitude, m_loc.longitude);
+					var m_img = $scope.createColorMarker(r.get('mood_color'), 16, 4);
+					new google.maps.Marker({
+						map: $scope.map,
+						position: m_latlng,
+						icon: m_img
+					});
+				}
+			},
+			error: function(error) {
+				alert("Could not get monuments: " + error.code + " " + error.message);
+			}
+		});
 	}, function(error){
 		console.log("Could not get location");
 	});
+	//draw a colored circle with a border and save as a data URI
+	$scope.createColorMarker = function(color, size, border_size){
+		var canvas = document.createElement('canvas');
+		canvas.width =  size + border_size;
+		canvas.height = size + border_size;
+		var ctx = canvas.getContext('2d');
+		ctx.imageSmoothingEnabled = false;
+		//draw black border
+		ctx.fillStyle = 'black';
+		ctx.beginPath();
+		ctx.arc(
+			(size+border_size)/2, 		//x
+			(size+border_size)/2, 		//y
+			(size+border_size)/2, 		//radius
+			0, 							//start angle
+			Math.PI*2					//end angle
+		);
+		ctx.closePath();
+		ctx.fill();
+		//draw colored filling (mmmmmm....filling)
+		ctx.fillStyle = color;
+		ctx.beginPath();
+		ctx.arc(
+			(size+border_size)/2, 		//x
+			(size+border_size)/2, 		//y
+			size/2, 					//radius
+			0, 							//start angle
+			Math.PI*2					//end angle
+		);
+		ctx.closePath();
+		ctx.fill();
+		return canvas.toDataURL();
+	};
 });
