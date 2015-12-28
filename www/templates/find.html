@@ -1,6 +1,6 @@
 <ion-view view-title="FIND" class="map-page">
 	<ion-content>
-		<div id="map" ng-class="monument_detail == true ? 'shrink' : ''"></div>
+		<div data-tap-disabled="true" id="map" ng-class="monument_detail == true ? 'shrink' : ''"></div>
 		<div class="monument-overview" style="background-color: {{monument.get('mood_color')}}">
 			<h1>{{monument.get('title')}}</h1>
 			<p>{{monument.get('views')}} Views</p>
