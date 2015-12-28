@@ -1,6 +1,6 @@
 angular.module('anonument', [])
 
-.controller('homeCtrl'  , function($scope){
+.controller('homeCtrl', function($scope){
 	//don't really need much here
 })
 .controller('createCtrl', function($scope, $ionicPlatform, $cordovaGeolocation) {
@@ -56,6 +56,7 @@ angular.module('anonument', [])
 		var m = new Monument();
 		m.set("title", $scope.data.title);
 		m.set("mood_color", $scope.create_color);
+		m.set("views", 0);
 		m.set("location", new Parse.GeoPoint($scope.loc.latitude, $scope.loc.longitude));
 		var parseError = function(ob, err){
 			console.log('Parse Error:', err);
@@ -106,7 +107,7 @@ angular.module('anonument', [])
 			});
 	});
 })
-.controller('findCtrl'  , function($scope, $cordovaGeolocation){
+.controller('findCtrl', function($scope, $cordovaGeolocation){
 	//get location first, then center map around that
 	var options = {timeout: 10000, enableHighAccuracy: true};
 	$cordovaGeolocation.getCurrentPosition(options).then(function(position){
@@ -134,17 +135,19 @@ angular.module('anonument', [])
 		query.limit(50);	//at most 50 results
 		query.find({
 			success: function(results) {
-				// Do something with the returned Parse.Object values
+				//add markers for each result
 				for (var i = 0; i < results.length; i++) {
 					var r = results[i];
 					var m_loc = r.get('location');
 					var m_latlng = new google.maps.LatLng(m_loc.latitude, m_loc.longitude);
 					var m_img = $scope.createColorMarker(r.get('mood_color'), 16, 4);
-					new google.maps.Marker({
+					var marker = new google.maps.Marker({
 						map: $scope.map,
 						position: m_latlng,
-						icon: m_img
+						icon: m_img,
+						monument: r
 					});
+					marker.addListener('click', $scope.monumentDetails);
 				}
 			},
 			error: function(error) {
@@ -186,5 +189,20 @@ angular.module('anonument', [])
 		ctx.closePath();
 		ctx.fill();
 		return canvas.toDataURL();
+	};
+	//show details about the monument
+	$scope.monument_detail = false;
+	$scope.monumentDetails = function(){
+		var m = this;
+		$scope.map.setZoom(18);
+		setTimeout(function(){
+			//trigger the resize event since it doesn't seem to notice
+			google.maps.event.trigger($scope.map, "resize");
+			$scope.map.panTo(m.position);
+		}, 500);
+		$scope.monument_detail = true;
+		$scope.monument = m.monument;
+		console.log($scope.monument.get('title'));
+		$scope.$apply();
 	};
 });

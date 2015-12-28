@@ -11,11 +11,40 @@ $ionicons-font-path: "../lib/ionic/fonts" !default;
     src: url($ionicons-font-path+"/Archivo.otf") format("opentype");
 }
 @font-face {
-    font-family: Cabin;
+    font-family: Merriweather;
 	font-weight: normal;
-    src: url($ionicons-font-path+"/Cabin-Regular.otf") format("opentype");
+    src: url($ionicons-font-path+"/Merriweather-Regular.ttf") format("truetype");
 }
-
+@font-face {
+    font-family: Merriweather;
+	font-weight: bold;
+    src: url($ionicons-font-path+"/Merriweather-Bold.ttf") format("truetype");
+}
+@font-face {
+    font-family: Merriweather;
+	font-weight: 900;
+    src: url($ionicons-font-path+"/Merriweather UltraBold.ttf") format("truetype");
+}
+@font-face {
+    font-family: 'Open Sans';
+	font-weight: 100;
+    src: url($ionicons-font-path+"/OpenSans-Light.ttf") format("truetype");
+}
+@font-face {
+    font-family: 'Open Sans';
+	font-weight: normal;
+    src: url($ionicons-font-path+"/OpenSans-Regular.ttf") format("truetype");
+}
+@font-face {
+    font-family: 'Open Sans';
+	font-weight: bold;
+    src: url($ionicons-font-path+"/OpenSans-Bold.ttf") format("truetype");
+}
+@font-face {
+    font-family: 'Open Sans';
+	font-weight: 900;
+    src: url($ionicons-font-path+"/OpenSans-ExtraBold.ttf") format("truetype");
+}
 
 // Include all of Ionic
 @import "www/lib/ionic/scss/ionic";
@@ -151,14 +180,17 @@ ion-content.positive  { background-color: $positive;	color: $light;  }
 			font-size: 18px;
 		}
 		input {
+			font-family: 'Open Sans';
+			font-size: 80%;
+			font-weight: bold;
 			color: $dark;
 			padding: 10px;
 			background-color: rgba($light, 0.3);
-			@include placeholder(rgba($light, 0.7), 0);
+			@include placeholder(rgba($light, 0.5), 0);
 		}
 	}
 	.item {
-		font-family: 'Cabin';
+		font-family: 'Open Sans';
 		background-color: transparent;
 		border: 0;
 		color: $light;
@@ -196,5 +228,25 @@ ion-content.positive  { background-color: $positive;	color: $light;  }
 	}
 	#map {
 		height: 100%;
+		transition: height 0.5s ease;
+		&.shrink {
+			height: 50%;
+		}
+	}
+	.monument-overview {
+		height: 50%;
+		h1 {
+			font-family: 'Merriweather';
+			font-weight: 900;
+			font-size: 200%;
+			padding: 15px;
+			margin-bottom: 10px;
+			text-transform: capitalize;
+			background-color: rgba($dark, 0.2);
+		}
+		p {
+			font-family: 'Open Sans';
+			padding: 5px 15px;
+		}
 	}
 }

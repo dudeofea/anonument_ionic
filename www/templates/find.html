@@ -1,5 +1,11 @@
 <ion-view view-title="FIND" class="map-page">
 	<ion-content>
-		<div id="map"></div>
+		<div id="map" ng-class="monument_detail == true ? 'shrink' : ''"></div>
+		<div class="monument-overview" style="background-color: {{monument.get('mood_color')}}">
+			<h1>{{monument.get('title')}}</h1>
+			<p>{{monument.get('views')}} Views</p>
+			<p>{{monument.get('comments')}} Comments</p>
+			<p class="too-far-text">Get closer to view comments or add your own, only 500m to go</p>
+		</div>
     </ion-content>
 </ion-view>
