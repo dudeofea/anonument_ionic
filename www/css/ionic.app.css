@@ -9279,7 +9279,9 @@ ion-content.positive {
     height: 50%; }
 
 .map-page .monument-overview {
-  height: 50%; }
+  height: 50%;
+  overflow: hidden;
+  position: relative; }
   .map-page .monument-overview h1 {
     font-family: 'Merriweather';
     font-weight: 900;
@@ -9291,3 +9293,12 @@ ion-content.positive {
   .map-page .monument-overview p {
     font-family: 'Open Sans';
     padding: 5px 15px; }
+  .map-page .monument-overview .item {
+    padding: 20px;
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    background-color: transparent;
+    border: 0; }
+    .map-page .monument-overview .item button {
+      width: 100%; }

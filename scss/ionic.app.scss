@@ -235,6 +235,8 @@ ion-content.positive  { background-color: $positive;	color: $light;  }
 	}
 	.monument-overview {
 		height: 50%;
+		overflow: hidden;
+		position: relative;
 		h1 {
 			font-family: 'Merriweather';
 			font-weight: 900;
@@ -247,6 +249,17 @@ ion-content.positive  { background-color: $positive;	color: $light;  }
 		p {
 			font-family: 'Open Sans';
 			padding: 5px 15px;
+		}
+		.item {
+			padding: 20px;
+			position: absolute;
+			bottom: 0;
+			width: 100%;
+			background-color: transparent;
+			border: 0;
+			button {
+				width: 100%;
+			}
 		}
 	}
 }

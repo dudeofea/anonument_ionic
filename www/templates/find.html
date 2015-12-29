@@ -4,8 +4,10 @@
 		<div class="monument-overview" style="background-color: {{monument.get('mood_color')}}">
 			<h1>{{monument.get('title')}}</h1>
 			<p>{{monument.get('views')}} Views</p>
-			<p>{{monument.get('comments')}} Comments</p>
-			<p class="too-far-text">Get closer to view comments or add your own, only 500m to go</p>
+			<p>{{monument.comments_str}}</p>
+			<div class="item">
+				<button class="button" ng-class="monument.distance > 10 ? 'disabled' : ''" ng-click="viewDetails()">{{monument.status}}</button>
+			</div>
 		</div>
     </ion-content>
 </ion-view>

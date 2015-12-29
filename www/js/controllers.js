@@ -108,6 +108,7 @@ angular.module('anonument', [])
 	});
 })
 .controller('findCtrl', function($scope, $cordovaGeolocation){
+	$scope.pos_geopoint = null;
 	//get location first, then center map around that
 	var options = {timeout: 10000, enableHighAccuracy: true};
 	$cordovaGeolocation.getCurrentPosition(options).then(function(position){
@@ -128,35 +129,57 @@ angular.module('anonument', [])
 			icon: pos_img
 		});
 		//query parse for nearby monuments
-		var Monument = Parse.Object.extend("monuments");
-		var pos_geopoint = new Parse.GeoPoint(position.coords);
-		var query = new Parse.Query(Monument);
-		query.near("location", pos_geopoint);
-		query.limit(50);	//at most 50 results
-		query.find({
-			success: function(results) {
-				//add markers for each result
-				for (var i = 0; i < results.length; i++) {
-					var r = results[i];
-					var m_loc = r.get('location');
-					var m_latlng = new google.maps.LatLng(m_loc.latitude, m_loc.longitude);
-					var m_img = $scope.createColorMarker(r.get('mood_color'), 16, 4);
-					var marker = new google.maps.Marker({
-						map: $scope.map,
-						position: m_latlng,
-						icon: m_img,
-						monument: r
-					});
-					marker.addListener('click', $scope.monumentDetails);
-				}
-			},
-			error: function(error) {
-				alert("Could not get monuments: " + error.code + " " + error.message);
-			}
-		});
+		$scope.pos_geopoint = new Parse.GeoPoint(position.coords);
+		$scope.getNearbyMonuments();
 	}, function(error){
 		console.log("Could not get location");
 	});
+	$scope.getNearbyMonuments = function(pos){
+		//response functions
+		var parse_error = function(error) {
+			alert("Could not get monuments: " + error.code + " " + error.message);
+		};
+		var monuments_success = function(results) {
+			//add markers for each result
+			for (var i = 0; i < results.length; i++) {
+				var get_comments = function(index){
+					var r = results[i];
+					//run the query for comments
+					var Comments = Parse.Object.extend('comments');
+					var query = new Parse.Query(Comments);
+					query.equalTo("monument", results[i]);
+					query.count({
+						success: function(num){
+							r.comments_str = num + " Comment";
+							//check dat grammar yo
+							if(num != 1){ r.comments_str += "s"; }
+							var m_loc = r.get('location');
+							var m_latlng = new google.maps.LatLng(m_loc.latitude, m_loc.longitude);
+							var m_img = $scope.createColorMarker(r.get('mood_color'), 16, 4);
+							var marker = new google.maps.Marker({
+								map: $scope.map,
+								position: m_latlng,
+								icon: m_img,
+								monument: r
+							});
+							marker.addListener('click', $scope.monumentDetails);
+						},
+						error: parse_error
+					});
+				}
+				get_comments(i);
+			}
+		};
+		//run the query for monuments
+		var Monument = Parse.Object.extend("monuments");
+		var query = new Parse.Query(Monument);
+		query.near("location", $scope.pos_geopoint);
+		query.limit(50);	//at most 50 results
+		query.find({
+			success: monuments_success,
+			error: parse_error
+		});
+	};
 	//draw a colored circle with a border and save as a data URI
 	$scope.createColorMarker = function(color, size, border_size){
 		var canvas = document.createElement('canvas');
@@ -202,7 +225,14 @@ angular.module('anonument', [])
 		}, 500);
 		$scope.monument_detail = true;
 		$scope.monument = m.monument;
-		console.log($scope.monument.get('title'));
+		//calc distance to monument
+		var km = m.monument.get('location').kilometersTo($scope.pos_geopoint);
+		$scope.monument.distance = parseInt(km * 1000);
+		if($scope.monument.distance > 10){
+			$scope.monument.status = "Only "+$scope.monument.distance+"m to go";
+		}else{
+			$scope.monument.status = "View";
+		}
 		$scope.$apply();
 	};
 });
