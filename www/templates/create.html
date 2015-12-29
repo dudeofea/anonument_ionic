@@ -30,7 +30,7 @@
 			<i class="icon ion-ios-location"></i>
 		</div>
 		<div class="item">
-			<button class="button" ng-class="loc == null ? 'disabled' : ''" ng-click="submit()" style="width: 100%">POST</button>
+			<button class="button" ng-class="loc == null || data.comment == '' || data.title == '' ? 'disabled' : ''" ng-click="submit()" style="width: 100%">POST</button>
 		</div>
 	</div>
 </ion-view>

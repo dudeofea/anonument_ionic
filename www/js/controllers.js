@@ -39,15 +39,6 @@ angular.module('anonument', [])
 	};
 	//post the monument to parse
 	$scope.submit = function(){
-		//TODO: possibly replace this with just blocking the POST button
-		if($scope.data.title == ""){
-			alert('Please enter a title');
-			return;
-		}
-		if($scope.data.comment == ""){
-			alert('Please enter a comment');
-			return;
-		}
 		//save the point in Parse and show the comment thread
 		var Monument = Parse.Object.extend("monuments");
 		var Comment = Parse.Object.extend("comments");
