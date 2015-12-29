@@ -97,14 +97,19 @@ angular.module('anonument', [])
 				console.log('coord:', $scope.loc);
 			});
 	});
+	//Unbind GPS watch on page exit
+	$scope.$on('$ionicView.leave', function(){
+		$cordovaGeolocation.clearWatch($scope.gps_watch);
+	});
 })
 .controller('findCtrl', function($scope, $cordovaGeolocation){
 	$scope.pos_geopoint = null;
-	//get location first, then center map around that
-	var options = {timeout: 10000, enableHighAccuracy: true};
-	$cordovaGeolocation.getCurrentPosition(options).then(function(position){
+	$scope.map = null;
+	$scope.monument = null;
+	//uses current user location and initializes the map
+	$scope.initMap = function(){
 		//create a google map
-		var latLng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+		var latLng = new google.maps.LatLng($scope.pos_geopoint._latitude, $scope.pos_geopoint._longitude);
 		var mapOptions = {
 			center: latLng,
 			zoom: 15,
@@ -119,13 +124,11 @@ angular.module('anonument', [])
 			position: latLng,
 			icon: pos_img
 		});
-		//query parse for nearby monuments
-		$scope.pos_geopoint = new Parse.GeoPoint(position.coords);
-		$scope.getNearbyMonuments();
-	}, function(error){
-		console.log("Could not get location");
-	});
-	$scope.getNearbyMonuments = function(pos){
+		//query parse for nearby monuments and display
+		$scope.showNearbyMonuments();
+	}
+	//gets all nearby monuments and shows them
+	$scope.showNearbyMonuments = function(){
 		//response functions
 		var parse_error = function(error) {
 			alert("Could not get monuments: " + error.code + " " + error.message);
@@ -216,14 +219,52 @@ angular.module('anonument', [])
 		}, 500);
 		$scope.monument_detail = true;
 		$scope.monument = m.monument;
+		$scope.updateMonumentDist();
+		$scope.$apply();
+	};
+	//update the distance and the status string of the selected monument
+	$scope.updateMonumentDist = function(){
 		//calc distance to monument
-		var km = m.monument.get('location').kilometersTo($scope.pos_geopoint);
+		var km = $scope.monument.get('location').kilometersTo($scope.pos_geopoint);
 		$scope.monument.distance = parseInt(km * 1000);
 		if($scope.monument.distance > 10){
 			$scope.monument.status = "Only "+$scope.monument.distance+"m to go";
 		}else{
 			$scope.monument.status = "View";
 		}
-		$scope.$apply();
-	};
+	}
+	//get location on page enter
+	$scope.$on('$ionicView.enter', function(){
+		var watchOptions = {
+			frequency : 1000,
+			timeout : 10000,
+			enableHighAccuracy: true // may cause errors if true
+		};
+		$scope.gps_watch = $cordovaGeolocation.watchPosition(watchOptions);
+		$scope.gps_watch.then(
+			null,
+			function(err) {
+				// error
+				console.log('GPS Error', err);
+			},
+			function(position) {
+				//set user location
+				$scope.pos_geopoint = new Parse.GeoPoint(position.coords);
+				//init map if needed
+				if($scope.map == null){
+					$scope.initMap()
+				}
+				//update selected monument distance if needed
+				if($scope.monument != null){
+					$scope.updateMonumentDist();
+				}
+				//$scope.$apply();		//who knows maybe I don't need it
+				console.log('coord:', $scope.pos_geopoint);
+			});
+	});
+	//Unbind GPS watch on page exit
+	$scope.$on('$ionicView.leave', function(){
+		console.log('leaving...');
+		$cordovaGeolocation.clearWatch($scope.gps_watch);
+	});
 });
