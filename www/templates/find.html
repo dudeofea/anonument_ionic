@@ -1,12 +1,12 @@
 <ion-view view-title="FIND" class="map-page">
 	<ion-content>
 		<div data-tap-disabled="true" id="map" ng-class="monument_detail == true ? 'shrink' : ''"></div>
-		<div class="monument-overview" style="background-color: {{monument.get('mood_color')}}">
+		<div class="monument" style="background-color: {{monument.get('mood_color')}}">
 			<h1>{{monument.get('title')}}</h1>
 			<p>{{monument.get('views')}} Views</p>
 			<p>{{monument.comments_str}}</p>
-			<div class="item">
-				<button class="button" ng-class="monument.distance > 10 ? 'disabled' : ''" ng-click="viewDetails()">{{monument.status}}</button>
+			<div class="item button-wrapper">
+				<button class="button" ng-class="monument.distance > dist_thresh ? 'disabled' : ''" ng-click="viewDetails()">{{monument.status}}</button>
 			</div>
 		</div>
     </ion-content>

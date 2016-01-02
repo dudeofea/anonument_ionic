@@ -1,7 +1,14 @@
-<ion-view view-title="COMMENT" class="form-page">
-	<ion-content style="background-color: {{monument.get('mood_color')}}">
+<ion-view view-title="COMMENT" class="comment-page">
+	<ion-content class="monument" style="background-color: {{monument.get('mood_color')}}">
+		<h1>{{monument.get('title')}}</h1>
 		<div class="list">
-			<h1>{{monument.get('title')}}</h1>
+			<div class="item" ng-repeat="comment in monument.comments">
+				{{comment.get('comment')}}
+			</div>
+		</div>
+		<div class="comment-footer">
+			<input type="text" placeholder="Your thoughts" ng-model="user_comment">
+			<button class="button icon ion-speakerphone"></button>
 		</div>
     </ion-content>
 </ion-view>

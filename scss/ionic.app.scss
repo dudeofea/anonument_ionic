@@ -78,6 +78,22 @@ html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abb
 	     -o-transform: $transform;
 		    transform: $transform;
 }
+@mixin border-radius-left($radius) {
+  -webkit-border-bottom-left-radius: $radius;
+     -webkit-border-top-left-radius: $radius;
+  	  -moz-border-radius-bottomleft: $radius;
+  	     -moz-border-radius-topleft: $radius;
+  	      border-bottom-left-radius: $radius;
+  	         border-top-left-radius: $radius;
+  }
+@mixin border-radius-right($radius) {
+  -webkit-border-bottom-right-radius: $radius;
+     -webkit-border-top-right-radius: $radius;
+	  -moz-border-radius-bottomright: $radius;
+	     -moz-border-radius-topright: $radius;
+	      border-bottom-right-radius: $radius;
+	         border-top-right-radius: $radius;
+}
 
 //page backgrounds
 ion-content.assertive { background-color: $assertive; 	color: $light;	}
@@ -233,33 +249,80 @@ ion-content.positive  { background-color: $positive;	color: $light;  }
 			height: 50%;
 		}
 	}
-	.monument-overview {
-		height: 50%;
-		overflow: hidden;
-		position: relative;
-		h1 {
-			font-family: 'Merriweather';
-			font-weight: 900;
-			font-size: 170%;
-			padding: 15px;
-			margin-bottom: 10px;
-			text-transform: capitalize;
-			background-color: rgba($dark, 0.2);
-		}
-		p {
-			font-family: 'Open Sans';
-			padding: 5px 15px;
-		}
-		.item {
-			padding: 20px;
-			position: absolute;
-			bottom: 0;
+}
+
+//styles relating to displaying a monument
+.monument {
+	height: 50%;
+	overflow: hidden;
+	position: relative;
+	h1 {
+		font-family: 'Merriweather';
+		font-weight: 900;
+		font-size: 170%;
+		padding: 15px;
+		margin-bottom: 10px;
+		text-transform: capitalize;
+		background-color: rgba($dark, 0.2);
+	}
+	p {
+		font-family: 'Open Sans';
+		padding: 5px 15px;
+	}
+	.item.button-wrapper {
+		padding: 20px;
+		position: absolute;
+		bottom: 0;
+		width: 100%;
+		background-color: transparent;
+		border: 0;
+		button {
 			width: 100%;
-			background-color: transparent;
-			border: 0;
-			button {
-				width: 100%;
+		}
+	}
+}
+
+//comment thread page
+.comment-page {
+	.monument {
+		position: absolute;
+		height: auto;
+		h1 {
+			margin-bottom: 0;
+		}
+	}
+	.item {
+		background-color: rgba(255,255,255, 0.3);
+		border: 0;
+		border-top: 1px solid rgba(255,255,255,0.4);
+		&:first-child {
+			border-top: 0;
+		}
+	}
+	.comment-footer {
+		position: fixed;
+		bottom: 0;
+		width: 100%;
+		padding: 8px 60px 8px 8px;
+		input {
+			width: 100%;
+			height: 47px;
+			@include border-radius-left(5px);
+			padding-left: 12px;
+		}
+		button {
+			position: absolute;
+			right: 8px;
+			top: 8px;
+			box-shadow: none;
+			@include border-radius-left(0px);
+			@include border-radius-right(5px);
+			&.activated {
+				@include transform(none);
 			}
 		}
+	}
+	.scroll {
+		height: 100%;
 	}
 }

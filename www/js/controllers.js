@@ -109,6 +109,7 @@ myApp.factory('MonData', function () {
 	$scope.pos_geopoint = null;
 	$scope.map = null;
 	$scope.monument = null;
+	$scope.dist_thresh = 15;
 	//uses current user location and initializes the map
 	$scope.initMap = function(){
 		//create a google map
@@ -230,7 +231,7 @@ myApp.factory('MonData', function () {
 		//calc distance to monument
 		var km = $scope.monument.get('location').kilometersTo($scope.pos_geopoint);
 		$scope.monument.distance = parseInt(km * 1000);
-		if($scope.monument.distance > 10){
+		if($scope.monument.distance > $scope.dist_thresh){
 			$scope.monument.status = "Only "+$scope.monument.distance+"m to go";
 		}else{
 			$scope.monument.status = "View";
@@ -278,6 +279,25 @@ myApp.factory('MonData', function () {
 	});
 })
 .controller('commentCtrl', function($scope, MonData){
-	console.log(MonData);
-	$scope.monument = MonData.monument;
+	//when loading page, load monument and comments
+	$scope.$on('$ionicView.enter', function(){
+		$scope.monument = MonData.monument;
+		//functions for parse error / success
+		var parse_error = function(error) {
+			alert("Could not get monuments: " + error.code + " " + error.message);
+		};
+		var comments_success = function(results) {
+			$scope.monument.comments = results;
+			$scope.$apply();
+		};
+		//run the query
+		var Comments = Parse.Object.extend("comments");
+		var query = new Parse.Query(Comments);
+		query.equalTo("monument", $scope.monument);
+		query.limit(200);	//at most 200 results
+		query.find({
+			success: comments_success,
+			error: parse_error
+		});
+	});
 });
