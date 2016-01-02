@@ -9278,8 +9278,10 @@ ion-content.positive {
   .map-page #map.shrink {
     height: 50%; }
 
+.map-page .monument {
+  height: 50%; }
+
 .monument {
-  height: 50%;
   overflow: hidden;
   position: relative; }
   .monument h1 {
@@ -9304,17 +9306,33 @@ ion-content.positive {
       width: 100%; }
 
 .comment-page .monument {
-  position: absolute;
-  height: auto; }
+  position: absolute; }
   .comment-page .monument h1 {
     margin-bottom: 0; }
-
-.comment-page .item {
-  background-color: rgba(255, 255, 255, 0.3);
-  border: 0;
-  border-top: 1px solid rgba(255, 255, 255, 0.4); }
-  .comment-page .item:first-child {
-    border-top: 0; }
+  .comment-page .monument .item {
+    background-color: rgba(255, 255, 255, 0.3);
+    border: 0;
+    border-top: 1px solid rgba(255, 255, 255, 0.4);
+    padding-right: 60px; }
+    .comment-page .monument .item:first-child {
+      border-top: 0; }
+    .comment-page .monument .item p {
+      color: #353535;
+      padding: 0;
+      overflow: initial;
+      white-space: initial; }
+    .comment-page .monument .item span {
+      font-family: 'Open Sans';
+      font-size: 14px;
+      font-weight: bold;
+      position: absolute;
+      right: 18px;
+      top: 50%;
+      -webkit-transform: translateY(-50%);
+      -moz-transform: translateY(-50%);
+      -ms-transform: translateY(-50%);
+      -o-transform: translateY(-50%);
+      transform: translateY(-50%); }
 
 .comment-page .comment-footer {
   position: fixed;
@@ -9354,6 +9372,3 @@ ion-content.positive {
       -ms-transform: none;
       -o-transform: none;
       transform: none; }
-
-.comment-page .scroll {
-  height: 100%; }

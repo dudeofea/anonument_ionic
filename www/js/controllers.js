@@ -279,6 +279,10 @@ myApp.factory('MonData', function () {
 	});
 })
 .controller('commentCtrl', function($scope, MonData){
+	$scope.monument = {
+		mood_color: 'rgba(0,0,0,0.3)',
+		get: function(attr){ return this[attr]; }
+	};
 	//when loading page, load monument and comments
 	$scope.$on('$ionicView.enter', function(){
 		$scope.monument = MonData.monument;
@@ -300,4 +304,25 @@ myApp.factory('MonData', function () {
 			error: parse_error
 		});
 	});
+	$scope.formatTime = function(time){
+		var now = new Date();
+		//difference in seconds
+		var diff = (now.getTime() - time.getTime())/1000;
+		if(diff < 60){
+			return Math.floor(diff) + "s";
+		}
+		//in minutes
+		diff /= 60;
+		if(diff < 60){
+			return Math.floor(diff) + "m";
+		}
+		//in hours
+		diff /= 60;
+		if(diff < 24){
+			return Math.floor(diff) + "h";
+		}
+		//in days
+		diff /= 24;
+		return Math.floor(diff) + "d";
+	}
 });

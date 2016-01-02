@@ -3,12 +3,13 @@
 		<h1>{{monument.get('title')}}</h1>
 		<div class="list">
 			<div class="item" ng-repeat="comment in monument.comments">
-				{{comment.get('comment')}}
+				<p>{{comment.get('comment')}}</p>
+				<span>{{formatTime(comment.get('createdAt'))}}</span>
 			</div>
 		</div>
-		<div class="comment-footer">
-			<input type="text" placeholder="Your thoughts" ng-model="user_comment">
-			<button class="button icon ion-speakerphone"></button>
-		</div>
     </ion-content>
+	<div class="comment-footer">
+		<input type="text" placeholder="Your thoughts" ng-model="user_comment">
+		<button class="button icon ion-speakerphone"></button>
+	</div>
 </ion-view>
