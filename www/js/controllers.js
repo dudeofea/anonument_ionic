@@ -341,5 +341,6 @@ myApp.factory('MonData', function () {
 			success: $scope.refreshComments,
 			error: $scope.parseError
 		});
+		$scope.user_comment = "";
 	};
 });
