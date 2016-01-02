@@ -9,7 +9,7 @@ Parse.initialize('yuRBoDhzewR97zctSJeKBZWdv3UFeiPTt7y3zvoJ',		//Application ID
 // the 2nd parameter is an array of 'requires'
 // 'starter.services' is found in services.js
 // 'starter.controllers' is found in controllers.js
-angular.module('starter', ['ionic', 'anonument', 'ngCordova'])
+window.myApp = angular.module('starter', ['ionic', 'ngCordova'])
 
 .run(function($ionicPlatform) {
   $ionicPlatform.ready(function() {
@@ -41,19 +41,29 @@ angular.module('starter', ['ionic', 'anonument', 'ngCordova'])
     templateUrl: 'templates/main.html'
   })
 
-  // Each tab has its own nav history stack:
-  var pages = ['home', 'create', 'find'];
-  for (var i = 0; i < pages.length; i++) {
-  $stateProvider.state('anonument.'+pages[i], {
-		url: '/'+pages[i],
-		views: {
-			'main-view': {
-				templateUrl: 'templates/'+pages[i]+'.html',
-				controller: pages[i]+'Ctrl'
+	// Each tab has its own nav history stack:
+	var pages = ['home', 'create', 'find'];
+	for (var i = 0; i < pages.length; i++) {
+		$stateProvider.state('anonument.'+pages[i], {
+			url: '/'+pages[i],
+			views: {
+				'main-view': {
+					templateUrl: 'templates/'+pages[i]+'.html',
+					controller: pages[i]+'Ctrl'
+				}
 			}
-		}
+		});
+	}
+	//the comment page takes a monument object id as an argument
+	$stateProvider.state('anonument.comment', {
+	  url: '/comment/:monId',
+	  views: {
+		  'main-view': {
+			  templateUrl: 'templates/comment.html',
+			  controller: 'commentCtrl'
+		  }
+	  }
 	});
-  }
 
   // if none of the above states are matched, use this as the fallback
   $urlRouterProvider.otherwise('/anonument/home');

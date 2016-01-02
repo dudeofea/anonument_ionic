@@ -1,9 +1,11 @@
-angular.module('anonument', [])
-
+//Share a monument across controllers
+myApp.factory('MonData', function () {
+    return { monument: null };
+})
 .controller('homeCtrl', function($scope){
 	//don't really need much here
 })
-.controller('createCtrl', function($scope, $ionicPlatform, $cordovaGeolocation) {
+.controller('createCtrl', function($scope, $ionicPlatform, $cordovaGeolocation, $state, MonData) {
 	/* Converts an HSL color value to RGB. Conversion formula
 	* adapted from http://en.wikipedia.org/wiki/HSL_color_space.
 	* Assumes h, s, and l are contained in the set [0, 1] and
@@ -61,8 +63,9 @@ angular.module('anonument', [])
 				c.set("comment", $scope.data.comment);
 				c.save(null, {
 					success: function(ob){
-						//TODO: take to comment thread page
-
+						//load monument into MonData and go to comments page
+						MonData.monument = ob;
+						$state.go('anonument.comment');
 					}, error: parseError
 				});
 			},
@@ -102,7 +105,7 @@ angular.module('anonument', [])
 		$cordovaGeolocation.clearWatch($scope.gps_watch);
 	});
 })
-.controller('findCtrl', function($scope, $cordovaGeolocation){
+.controller('findCtrl', function($scope, $cordovaGeolocation, $state, MonData){
 	$scope.pos_geopoint = null;
 	$scope.map = null;
 	$scope.monument = null;
@@ -232,7 +235,13 @@ angular.module('anonument', [])
 		}else{
 			$scope.monument.status = "View";
 		}
-	}
+	};
+	//go to the comments page for selected monument
+	$scope.viewDetails = function(){
+		//load monument into MonData and go to comments page
+		MonData.monument = $scope.monument;
+		$state.go('anonument.comment');
+	};
 	//get location on page enter
 	$scope.$on('$ionicView.enter', function(){
 		var watchOptions = {
@@ -267,4 +276,8 @@ angular.module('anonument', [])
 		console.log('leaving...');
 		$cordovaGeolocation.clearWatch($scope.gps_watch);
 	});
+})
+.controller('commentCtrl', function($scope, MonData){
+	console.log(MonData);
+	$scope.monument = MonData.monument;
 });
