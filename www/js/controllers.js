@@ -283,13 +283,14 @@ myApp.factory('MonData', function () {
 		mood_color: 'rgba(0,0,0,0.3)',
 		get: function(attr){ return this[attr]; }
 	};
+	$scope.user_comment = "";
+	$scope.parse_error = function(error) {
+		alert("Could not get monuments: " + error.code + " " + error.message);
+	};
 	//when loading page, load monument and comments
-	$scope.$on('$ionicView.enter', function(){
+	$scope.refreshComments = function(){
 		$scope.monument = MonData.monument;
 		//functions for parse error / success
-		var parse_error = function(error) {
-			alert("Could not get monuments: " + error.code + " " + error.message);
-		};
 		var comments_success = function(results) {
 			$scope.monument.comments = results;
 			$scope.$apply();
@@ -299,11 +300,13 @@ myApp.factory('MonData', function () {
 		var query = new Parse.Query(Comments);
 		query.equalTo("monument", $scope.monument);
 		query.limit(200);	//at most 200 results
+		query.descending("createdAt");
 		query.find({
 			success: comments_success,
-			error: parse_error
+			error: $scope.parse_error
 		});
-	});
+	}
+	$scope.$on('$ionicView.enter', $scope.refreshComments);
 	$scope.formatTime = function(time){
 		var now = new Date();
 		//difference in seconds
@@ -325,4 +328,18 @@ myApp.factory('MonData', function () {
 		diff /= 24;
 		return Math.floor(diff) + "d";
 	}
+	$scope.submitComment = function(){
+		if($scope.user_comment == ""){
+			return;
+		}
+		//since not blank, create new comment on parse, then refresh
+		var Comment = Parse.Object.extend("comments");
+		var c = new Comment();
+		c.set("monument", $scope.monument);
+		c.set("comment", $scope.user_comment);
+		c.save(null, {
+			success: $scope.refreshComments,
+			error: $scope.parseError
+		});
+	};
 });

@@ -292,10 +292,11 @@ ion-content.positive  { background-color: $positive;	color: $light;  }
 			margin-bottom: 0;
 		}
 		.item {
-			background-color: rgba(255,255,255, 0.3);
+			background-color: rgba($light, 0.3);
 			border: 0;
-			border-top: 1px solid rgba(255,255,255,0.4);
+			border-top: 1px solid rgba($light, 0.2);
 			padding-right: 60px;
+			margin: 0;
 			&:first-child {
 				border-top: 0;
 			}

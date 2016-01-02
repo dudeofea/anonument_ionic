@@ -9312,8 +9312,9 @@ ion-content.positive {
   .comment-page .monument .item {
     background-color: rgba(255, 255, 255, 0.3);
     border: 0;
-    border-top: 1px solid rgba(255, 255, 255, 0.4);
-    padding-right: 60px; }
+    border-top: 1px solid rgba(255, 255, 255, 0.2);
+    padding-right: 60px;
+    margin: 0; }
     .comment-page .monument .item:first-child {
       border-top: 0; }
     .comment-page .monument .item p {
