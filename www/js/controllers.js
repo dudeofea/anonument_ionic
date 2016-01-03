@@ -49,7 +49,7 @@ myApp.factory('MonData', function () {
 		var m = new Monument();
 		m.set("title", $scope.data.title);
 		m.set("mood_color", $scope.create_color);
-		m.set("views", 0);
+		m.set("views", 1);
 		m.set("location", new Parse.GeoPoint($scope.loc.latitude, $scope.loc.longitude));
 		var parseError = function(ob, err){
 			console.log('Parse Error:', err);
@@ -248,6 +248,9 @@ myApp.factory('MonData', function () {
 	};
 	//go to the comments page for selected monument
 	$scope.viewDetails = function(){
+		//increment the monument's view count
+		$scope.monument.increment('views');
+		$scope.monument.save();
 		//load monument into MonData and go to comments page
 		MonData.monument = $scope.monument;
 		$state.go('anonument.comment');
