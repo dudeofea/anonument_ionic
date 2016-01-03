@@ -5,7 +5,7 @@ myApp.factory('MonData', function () {
 .controller('homeCtrl', function($scope){
 	//don't really need much here
 })
-.controller('createCtrl', function($scope, $ionicPlatform, $cordovaGeolocation, $state, MonData) {
+.controller('createCtrl', function($scope, $ionicPlatform, $cordovaGeolocation, $state, MonData, $ionicHistory) {
 	/* Converts an HSL color value to RGB. Conversion formula
 	* adapted from http://en.wikipedia.org/wiki/HSL_color_space.
 	* Assumes h, s, and l are contained in the set [0, 1] and
@@ -56,15 +56,24 @@ myApp.factory('MonData', function () {
 			alert('Could not save point, connection error: ', err);
 		}
 		m.save(null, {
-			success:function(ob) {
+			success:function(m_ob) {
 				//save first comment as well
 				var c = new Comment();
-				c.set("monument", ob);
+				c.set("monument", m_ob);
 				c.set("comment", $scope.data.comment);
 				c.save(null, {
-					success: function(ob){
+					success: function(c_ob){
 						//load monument into MonData and go to comments page
-						MonData.monument = ob;
+						MonData.monument = m_ob;
+						//little hack to set the home screen as the page you get
+						//when you press back from the comments page
+						$ionicHistory.nextViewOptions({
+							disableAnimate: true
+						});
+						$ionicHistory.currentView($ionicHistory.backView());
+						$ionicHistory.nextViewOptions({
+							disableAnimate: false
+						});
 						$state.go('anonument.comment');
 					}, error: parseError
 				});

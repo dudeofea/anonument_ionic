@@ -290,6 +290,7 @@ ion-content.positive  { background-color: $positive;	color: $light;  }
 		position: absolute;
 		h1 {
 			margin-bottom: 0;
+			background-color: transparent;
 		}
 		.item {
 			background-color: rgba($light, 0.3);

@@ -9308,7 +9308,8 @@ ion-content.positive {
 .comment-page .monument {
   position: absolute; }
   .comment-page .monument h1 {
-    margin-bottom: 0; }
+    margin-bottom: 0;
+    background-color: transparent; }
   .comment-page .monument .item {
     background-color: rgba(255, 255, 255, 0.3);
     border: 0;
